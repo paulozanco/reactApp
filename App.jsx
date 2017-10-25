@@ -1,30 +1,25 @@
-import React from 'react';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {addTodo} from './actions/actions'
 
-class App extends React.Component {
-  constructor() {
-    super();
+import AddTodo from './components/AddTodo.jsx'
+import TodoList from './components/TodoList.jsx'
 
-    this.state = {
-      data: []
-    }
-
-    this.setStateHandler = this.setStateHandler.bind(this);
-  };
-
-  setStateHandler() {
-    this.setState({
-      data: [this.state.data, "setState"]
-    })
-  };
-
+class App extends Component {
   render() {
+    const {dispatch, visibleTodos} = this.props
+
     return (
       <div>
-        <button onClick={this.setStateHandler}>SET STATE</button>
-        <h4>State Array: {this.state.data}</h4>
+        <AddTodo onAddClick={text ⇒dispatch(addTodo(text))}/>
+        <TodoList todos={visibleTodos}/>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+function select(state) {
+  return {visibleTodos: state.todos}
+}
+
+export default connect(select)(App)
