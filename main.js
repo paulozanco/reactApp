@@ -1,66 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import React from 'react'
 
-class App extends React.Component {
-  render() {
-    return (
-      <Router>
-        <div>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-          </ul>
+import {render} from 'react-dom'
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
 
-          <hr/>
+import App from './App.jsx'
+import todoApp from './reducers/reducers'
 
-          <Route exact path="/home" component={Home}/>
-          <Route path="/about" component={About}/>
-          <Route path="/contact" component={Contact}/>
+let store = createStore(todoApp)
 
-        </div>
-      </Router>
-    )
-  }
-}
+let rootElement = document.getElementById('app')
 
-export default App;
-
-export class Home extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Home...</h1>
-      </div>
-    )
-  }
-}
-
-export class About extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>About...</h1>
-      </div>
-    )
-  }
-}
-
-export class Contact extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Contact...</h1>
-      </div>
-    )
-  }
-}
-
-ReactDOM.render(<App/>, document.getElementById('app'))
+render(
+  <Provider store={store}>
+  <App/>
+</Provider>, rootElement)
